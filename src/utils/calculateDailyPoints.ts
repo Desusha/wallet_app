@@ -36,7 +36,6 @@ export const calculateDailyPoints = (date: Date = new Date()): number => {
  */
 export const getDayOfSeason = (date: Date): number => {
   const month = date.getMonth(); // 0-11
-  const day = date.getDate(); // 1-31
   const year = date.getFullYear();
   
   let seasonStart: Date;

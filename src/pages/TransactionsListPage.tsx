@@ -36,6 +36,7 @@ const TransactionsListPage: React.FC = () => {
   const { cardInfo, transactions } = transactionsData;
   const available = cardInfo.maxLimit - cardInfo.currentBalance;
   const dailyPoints = calculateDailyPoints();
+  const typedTransactions = transactions as Transaction[];
 
   const handleTransactionClick = (transaction: Transaction) => {
     navigate(`/transaction/${transaction.id}`);
@@ -68,7 +69,7 @@ const TransactionsListPage: React.FC = () => {
         <h2 className="section-title">Latest Transactions</h2>
         <List
           className="transactions-list"
-          dataSource={transactions}
+          dataSource={typedTransactions}
           renderItem={(transaction: Transaction) => (
             <List.Item 
               className="transaction-item"
