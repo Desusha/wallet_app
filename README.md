@@ -1,73 +1,122 @@
-# React + TypeScript + Vite
+# Wallet App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A mobile-first wallet application built with React, TypeScript, and Ant Design. This app displays card balance, daily points, and transaction history with detailed views.
 
-Currently, two official plugins are available:
+## 🎯 Task Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project implements a two-screen mobile wallet application:
 
-## React Compiler
+### Screen 1: Transactions List
+![Transactions List](./screenshots/transactions-list.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Features:**
+- **Card Balance Block**: Displays current balance and available credit
+  - Maximum card limit: $1,500
+  - Available amount calculated as: limit - balance
+- **No Payment Due Block**: Shows payment status message
+- **Daily Points Block**: Calculates points based on current season day
+  - Formula: Day 1 = 2 points, Day 2 = 3 points
+  - Day 3+: 100% of (day-2) + 60% of (day-1)
+  - Displayed as "K" format when > 1000 (e.g., 29K)
+- **Latest Transactions**: Shows 10 most recent transactions
+  - Payment (top-ups): Amount with "+" prefix
+  - Credit (expenses): Standard amount
+  - Date formatting: Last 7 days show day names, older show date
+  - Pending status indicator
+  - Authorized user display (if applicable)
 
-## Expanding the ESLint configuration
+### Screen 2: Transaction Detail
+![Transaction Detail](./screenshots/transaction-detail.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Features:**
+- Large amount display
+- Merchant name and transaction time
+- Status indicator (Approved/Pending)
+- Card information
+- Total amount
+- Back navigation to list
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+
+```bash
+# Install dependencies
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Running the Project
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Start development server
+npm run dev
 ```
+
+The app will be available at `http://localhost:5173` (or another port if 5173 is in use).
+
+### Building for Production
+
+```bash
+# Build the app
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 🛠️ Tech Stack
+
+- **React 18** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Ant Design** - UI component library
+- **React Router** - Navigation
+- **FontAwesome** - Icons for merchants and UI elements
+
+## 📁 Project Structure
+
+```
+src/
+├── pages/
+│   ├── TransactionsListPage.tsx    # Main list screen
+│   └── TransactionDetailPage.tsx   # Detail view screen
+├── data/
+│   └── transactions.json           # Test data (10 transactions)
+├── types/
+│   └── index.ts                    # TypeScript interfaces
+├── utils/
+│   ├── calculateDailyPoints.ts     # Points calculation logic
+│   └── dateFormatter.ts            # Date formatting utilities
+├── styles/
+│   ├── TransactionsListPage.css    # List screen styles
+│   └── TransactionDetailPage.css   # Detail screen styles
+├── App.tsx                         # Main app with routing
+└── main.tsx                        # Entry point
+```
+
+## 📊 Daily Points Calculation
+
+The daily points system is based on the current season (Spring, Summer, Autumn, Winter):
+
+- **Seasons:**
+  - Spring: March 1 - May 31
+  - Summer: June 1 - August 31
+  - Autumn: September 1 - November 30
+  - Winter: December 1 - February 28/29
+
+- **Points Formula:**
+  - Day 1 of season: 2 points
+  - Day 2 of season: 3 points
+  - Day 3+: Previous day × 60% + Two days ago × 100%
+
+## 📱 Mobile Layout
+
+The application is optimized for mobile devices with:
+- Max-width: 480px
+- Responsive card layouts
+- Touch-friendly interactions
+- Mobile-first design patterns
